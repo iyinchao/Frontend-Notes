@@ -7,9 +7,11 @@
 >TODO: 名词了解：“module bundlers vs. module loaders”、“Webpack vs. Browserify”和“AMD vs. CommonJS”
 
 ## 为什么使用模块
-1. 干净的全局命名空间  
+1 干净的全局命名空间  
 
 >如果变量声明在顶级函数的作用域外，那么这些变量都是全局的（意味着任何地方都能读写它）。因此，造成了常见的“命名空间污染”，从而导致完全无关的代码却共享着全局变量
+
+2 TODO: 其他的优点
 
 ## 整合模块的方法
 
@@ -170,10 +172,33 @@ AMD模块可以是一个对象、函数、构造函数、字符串、JSON 或其
 > SeaJS 在推广过程中对模块定义的规范化产出。  
 > Ref:   
 > [github issue - cmd 规范(中文)][5]  
-> [RequireJS的异同][6]
+> [RequireJS的异同][6]  
 
+与RequireJS(AMD)相比，CMD规范希望 **依赖就近** 书写，并且 **延迟加载** 依赖项， **as lazy as possible**
+```javascript
+// CMD
+define(function(require, exports, module) {
+var a = require('./a')
+a.doSomething()
+// 此处略去 100 行
+var b = require('./b') // 依赖可以就近书写
+b.doSomething()
+// ...
+})
+```
+然而在实际测试中，可能RequireJS的性能更高，参见[豆瓣博主的一个实验][7]  
 
+网友 @jockchou 的评论认为：  
+>我个人感觉requirejs更科学，所有依赖的模块要先执行好。如果A模块依赖B。**当执行A中的某个操doSomething()后，再去依赖执行B模块require('B');如果B模块出错了，doSomething的操作如何回滚？**  
 
+>很多语言中的import, include, useing都是先将导入的类或者模块执行好。如果被导入的模块都有问题，有错误，执行当前模块有何意义？
+总之载入的所有模块，都是当前要使用的，为什么要动态的去执行？这个问题可以总结为模块的载入执行是静态还是动态。如果是动态执行的话，那页面的程序执行过程会受到当前模块执行的影响。而正如楼主所言，**动态执行总体时间上是比静态一次执行要慢的**。  
+
+>楼主说requirejs是坑，是因为你还不太理解 **AMD“异步模块”的定义，被依赖的模块必须先于当前模块执行，而没有依赖关系的模块，可以没有先后**。在楼主的例子中，**假设mod1和mod2某天发生了依赖的话，比如在某个版本，mod1依赖了mod2（这是完全有可能的），这个时候seajs的懒执行会不会有问题？而requirejs是不会有问题，也不需要修改当前模块。**
+在javascript这个天生异步的语言中，却把模块懒执行，这让人很不理解。**想像一下factory是个模块工厂吧，而依赖dependencies是工厂的原材料，在工厂进行生产的时候，是先把原材料一次性都在它自己的工厂里加工好，还是把原材料的工厂搬到当前的factory来什么时候需要，什么时候加工，哪个整体时间效率更高？显然是requirejs，requirejs是加载即可用的。为了响应用户的某个操作，当前工厂正在进行生产，当发现需要某种原材料的时候，突然要停止生产，去启动原材料加工，这不是让当前工厂非常焦燥吗？**
+暂且不去理会这个吧，等ECMA规范中加入了模块化的定义后，再看谁更合理吧。  
+
+### 使用Native JS
 
 [1]: http://web.jobbole.com/85267/
 [2]: http://stackoverflow.com/questions/1634268/explain-javascripts-encapsulated-anonymous-function-syntax
@@ -181,3 +206,4 @@ AMD模块可以是一个对象、函数、构造函数、字符串、JSON 或其
 [4]: http://requirejs.org/docs/whyamd.html
 [5]: https://github.com/seajs/seajs/issues/242 "cmd 规范中文版"
 [6]: https://github.com/seajs/seajs/issues/277
+[7]: https://www.douban.com/note/283566440/
