@@ -1,9 +1,9 @@
 # 前端开发面试题
-> 题目和解答来自： [Markyun](https://github.com/markyun)  
-> 感谢Github主和各位的整理和汇总，该仓库仅供个人学习使用，以本人喜欢的格式重新编辑，并附加了自己查到的一些附加知识点。
+> 感谢Github主和各位的整理和汇总，该仓库仅供个人学习使用，以本人喜欢的格式重新编辑，并在原有答案基础上附加了自己查到的一些知识点。
 
+> 题目和原始解答来自： [Markyun](https://github.com/markyun)  
 
-> # 原ReadMe.md
+## 以下为原 ReadMe.md
 > # 前端开发面试题
 
 >## <a name='preface'>前言</a> ##

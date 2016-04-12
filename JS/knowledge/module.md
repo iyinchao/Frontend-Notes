@@ -134,7 +134,8 @@ myModuleInstance.goodbye(); // 'goodbye!'
 
 #### AMD (Asynchronous Module Definition)
 > RequireJS 在推广过程中对模块定义的规范化产出  
-> Ref: [RequireJS doc][4]  
+> Ref: [RequireJS doc][4]   
+> [AMD JS API][8]
 
 ```javascript
 //myModule.js
@@ -200,6 +201,12 @@ b.doSomething()
 
 ### 使用Native JS
 
+
+### 延申阅读
+[使用 AMD、CommonJS 及 ES Harmony 编写模块化的 JavaScript](http://justineo.github.io/singles/writing-modular-js/)  
+[Modules in JavaScript Next](http://jsmodules.io)
+
+
 [1]: http://web.jobbole.com/85267/
 [2]: http://stackoverflow.com/questions/1634268/explain-javascripts-encapsulated-anonymous-function-syntax
 [3]: https://www.zhihu.com/question/20351507  
@@ -207,3 +214,4 @@ b.doSomething()
 [5]: https://github.com/seajs/seajs/issues/242 "cmd 规范中文版"
 [6]: https://github.com/seajs/seajs/issues/277
 [7]: https://www.douban.com/note/283566440/
+[8]: https://github.com/amdjs/amdjs-api/wiki/AMD
