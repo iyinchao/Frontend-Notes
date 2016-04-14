@@ -570,6 +570,7 @@ person = {
 缓存的？）
 
 -  谈一谈你对ECMAScript6的了解？
+http://javascript.ruanyifeng.com/advanced/ecmascript6.html#toc11
 
 -  ECMAScript6 怎么写class么，为什么会出现class这种东西?
 
@@ -647,6 +648,10 @@ person = {
 -  jQuery 的队列是如何实现的？队列可以用在哪些地方？
 
 -  谈一下Jquery中的bind(),live(),delegate(),on()的区别？
+bind(),直接绑定到对象  
+live(),代理模式，绑定到document  
+delegate(), 代理，可以指定绑定的位置  
+on(), 集大成函数，前三个都是使用on实现的
 
 -  JQuery一个对象可以同时绑定多个事件，这是如何实现的？
 
