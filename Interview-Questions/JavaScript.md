@@ -517,6 +517,7 @@ person = {
 -  模块化开发怎么做？
 
 	 [ 立即执行函数](http://benalman.com/news/2010/11/immediately-invoked-function-expression/),不暴露私有成员
+   
 ```javascript
   var module1 = (function(){
   　　　　var _count = 0;
