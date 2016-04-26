@@ -230,3 +230,7 @@ b, i, u, s, pre
 Semantic Style Elements -- 语义样式标签
 strong, em, ins, del, code
 应该准确使用语义样式标签, 但不能滥用, 如果不能确定时首选使用自然样式标签。
+
+-  移动端最小触控区域是多大？
+> 在IE10的blog里发现这个值得做移动应用的人注意：人的手指平均宽度为11mm，在touch设备里理想状况下的响应目标尺寸应不小于40px，响应目标之间应不小于2mm，即10px。
+[Reference](https://blogs.msdn.microsoft.com/ie/2012/04/20/guidelines-for-building-touch-friendly-sites/)
