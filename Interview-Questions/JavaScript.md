@@ -2,7 +2,15 @@
 
 -  **介绍js的基本数据类型。**
 
-> Undefined、Null、Boolean、Number、String
+> 5种，`Undefined、Null、Boolean、Number、String`   
+
+> ECMAScript6中新增 Symbol  
+> 注意：
+1. Symbol不能用New新建；可使用`var s = Symbol('foo');`添加描述（用于toString等）
+2. 用于属性名，防止意外改写；用于定义常量或枚举；用于消除魔术字符串
+3. 属性名不会被`for...in`，`Object.getOwnPropertyNames()`等返回，仅通过`Object.getOwnPropertySymbols()`访问。
+4. 详见[ECMAScript 6 入门](http://es6.ruanyifeng.com/#docs/symbol)
+
 
 -  **介绍js有哪些内置对象？**
 
@@ -22,9 +30,14 @@
 6.函数不应该有时候有返回值，有时候没有返回值。  
 7.For循环必须使用大括号  
 8.If语句必须使用大括号  
-> 9.for-in循环中的变量 应该使用let关键字明确限定作用域(或者在函数中使用var)，从而避免作用域污染。  
+9.for-in循环中的变量 应该使用let关键字明确限定作用域(或者在函数中使用var)，从而避免作用域污染。
+>>  TODO: 朴灵的JS编码规范
 
 -  **JavaScript原型，原型链 ? 有什么特点？**
+
+> 图解：
+![Prototype Diagram](../Resources/prototype-diagram.jpg)
+>> TODO: 把图画完
 
 > 每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，
 如果这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，
@@ -37,9 +50,10 @@ JavaScript对象是通过引用来传递的，我们创建的每个新对象实�
 >当我们需要一个属性的时，Javascript引擎会先看当前对象中是否有这个属性， 如果没有的话，
 就会查找他的Prototype对象是否有这个属性，如此递推下去，一直检索到 Object 内建对象。
 ```Javascript
-function Func(){}
-  Func.prototype.name = "Sean";
-  Func.prototype.getInfo = function() {
+function Func(){
+}
+Func.prototype.name = "Sean";
+Func.prototype.getInfo = function() {
   return this.name;
 }
 var person = new Func();//现在可以参考var person = Object.create(oldObject);
@@ -88,12 +102,13 @@ alert(demo.name);//得到被继承的属性
 
 > 参考：[构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)  
 [非构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html)；
+>>TODO: 做一下笔记
 
 - **Javascript创建对象的几种方式？**
 
 > javascript创建对象简单的说,无非就是使用内置对象或各种自定义对象，当然还可以用JSON；但写法有很多种，也能混合使用。
 
-> 工厂模式    
+> **工厂模式**    
 ```javascript
 function objFactory(v1, v2, v3) {
   var o = new Object();
@@ -108,7 +123,8 @@ function objFactory(v1, v2, v3) {
 var obj1 = objFactory(...);
 ```
 
-> 构造函数模式
+> **构造函数模式**
+在函数内部使用this，为创建的对象绑定各种属性
 ```javascript
 function Person(name, age, job){
   this.name = name;
@@ -128,7 +144,7 @@ var person2 = new Person(“Greg”, 27, “Doctor”);
 缺点： 会为不同实例创建不同的函数成员，如上例中的function（因为function也是对象）。但是无必要。可以在外部定义一个共享的function，但是失去了封装性。  
 使用原型模式。  
 
-> 原型模式  
+> **原型模式**  
 ```javascript
 function Person(){
 }
@@ -143,9 +159,9 @@ person1.sayName(); //”Nicholas”
 var person2 = new Person();
 alert(person1.sayName == person2.sayName); //true
 ```
+可将共享的，引用类型的属性（比如成员方法）用原型模式定义
 
-
-> 1、对象字面量的方式   
+>**对象字面量的方式**   
 ```javascript
 person = {
   firstname:"Mark",
@@ -154,68 +170,6 @@ person = {
   eyecolor:"black"
 };
 ```
-
-> 2、用function来模拟无参的构造函数
-```javascript
-	function Person(){}
-	var person=new Person();//定义一个function，如果使用new"实例化",该function可以看作是一个Class
-	person.name="Mark";
-	person.age="25";
-	person.work=function(){
-	alert(person.name+" hello...");
-	}
-	person.work();
-```
-
-3、用function来模拟参构造函数来实现（用this关键字定义构造的上下文属性）
-
-	function Pet(name,age,hobby){
-	   this.name=name;//this作用域：当前对象
-	   this.age=age;
-	   this.hobby=hobby;
-	   this.eat=function(){
-	      alert("我叫"+this.name+",我喜欢"+this.hobby+",是个程序员");
-	   }
-	}
-	var maidou =new Pet("麦兜",25,"coding");//实例化、创建对象
-	maidou.eat();//调用eat方法
-
-
-4、用工厂方式来创建（内置对象）
-
-	 var wcDog =new Object();
-	 wcDog.name="旺财";
-	 wcDog.age=3;
-	 wcDog.work=function(){
-	   alert("我是"+wcDog.name+",汪汪汪......");
-	 }
-	 wcDog.work();
-
-
-5、用原型方式来创建
-
-	function Dog(){
-
-	 }
-	 Dog.prototype.name="旺财";
-	 Dog.prototype.eat=function(){
-	 alert(this.name+"是个吃货");
-	 }
-	 var wangcai =new Dog();
-	 wangcai.eat();
-
-
-5、用混合方式来创建
-
-	function Car(name,price){
-	  this.name=name;
-	  this.price=price;
-	}
-	 Car.prototype.sell=function(){
-	   alert("我是"+this.name+"，我现在卖"+this.price+"万元");
-	  }
-	var camry =new Car("凯美瑞",27);
-	camry.sell();
 
 -  **Javascript作用链域?**
 
@@ -227,6 +181,39 @@ person = {
   - this总是指向函数的直接调用者（而非间接调用者）；
   - 如果有new关键字，this指向new出来的那个对象；
   - 在事件中，this指向触发这个事件的对象，特殊的是，IE中的attachEvent中的this总是指向全局对象Window；
+
+>>TODO: http://bonsaiden.github.io/JavaScript-Garden/zh/#function.this  
+
+>> TODO:
+why?  
+```javascript
+var a = [];
+for (var i = 0; i < 10; i++) {
+  a[i] = function () {
+    console.log(i);
+  };
+}
+a[6](); // 10
+```
+```javascript
+var a = [];
+for (var i = 0; i < 10; i++) {
+var k = i;
+  a[i] = function () {
+    console.log(k);
+  };
+}
+a[6](); // 9
+```
+```javascript
+var a = [];
+for (let i = 0; i < 10; i++) {
+  a[i] = function () {
+    console.log(i);
+  };
+}
+a[6](); // 6
+```
 
 -  eval是做什么的？
 
@@ -517,7 +504,7 @@ person = {
 -  模块化开发怎么做？
 
 	 [ 立即执行函数](http://benalman.com/news/2010/11/immediately-invoked-function-expression/),不暴露私有成员
-   
+
 ```javascript
   var module1 = (function(){
   　　　　var _count = 0;

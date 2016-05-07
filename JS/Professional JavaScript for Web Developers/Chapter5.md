@@ -57,7 +57,8 @@ var expFun = function () { /**/};
 ```
 
 ### Function API
-- **Function类构造函数**  
+
+#### 1. Function类构造函数
 
 ```JavaScript
 var sum = new Function("v1", "v2", "return v1 + v2");
@@ -67,13 +68,52 @@ var sum = new Function("v1", "v2", "return v1 + v2");
 
 > TODO: 构造函数干的三件事（this）
 
-- **arguments 和 this**
+#### 2. arguments 和 this
 
 都可在函数内部直接访问  
+
 **this:** 指向函数的调用者（函数所绑定的对象，全局定义的为Global对象），或者对构造函数来说为将要新建的对象。  
 
 **arguments:** 该函数的参数，伪数组。  
-`arguments.callee`可访问arguments所在的函数。  
+`arguments.callee`可访问arguments所在的函数（函数自身）。  
 <do>可用于解耦，抽象地在函数内部引用函数本身。（因为函数名可以任意赋值）</do>  <w class="use-strict">严格模式下不可用</w>  
 
-- **length 和 caller**
+`arguments.length`用于访问实际获得的参数长度  
+
+`arguments[Symbol.iterator]`  说明可使用迭代器 [参考](http://es6.ruanyifeng.com/?search=yield&x=0&y=0#docs/iterator#数据结构的默认Iterator接口)
+
+#### 3.length 和 caller
+
+**length:** 函数期望获得的参数长度  
+**caller:** 函数的调用者  
+<w class="use-strict">严格模式下不可为caller赋值</w>  
+
+#### 4. bind/call/apply
+
+用于改变函数内this的指向  
+
+**call:**  参数按顺序依次传入  
+```JavaScript
+fun.call(otherObj, arg1, arg2, arg3);
+```
+
+**apply：** 参数以数组形式传入  
+```JavaScript
+fun.apply(otherObj, [arg1, arg2, arg3]);
+```
+
+**bind:** 返回一个函数，参数为bind传入的+调用时传入的
+```JavaScript
+var bindFun = fun.bind(otherObj, arg1);
+bindFun(arg2, arg3);
+//arguments : arg1, arg2, arg3
+```
+
+## TODO
+ - [ ] Option pages
+ - [x] Internationalization
+ - [x] Bugs fix
+ - [x] Add mini map feature
+ - [x] Refine mini map
+ - [x] Performance enhancement
+ - [x] Add case insensitive option
