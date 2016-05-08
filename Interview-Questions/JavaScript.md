@@ -36,8 +36,9 @@
 -  **JavaScript原型，原型链 ? 有什么特点？**
 
 > 图解：
-![Prototype Diagram](../Resources/prototype-diagram.jpg)
->> TODO: 把图画完
+![Prototype Diagram](../Resources/prototype-diagram.jpg)  
+![Prototype Diagram 2](../Resources/prototype-diagram-2.png)
+>> TODO: 把图画完  
 
 > 每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，
 如果这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，
@@ -72,7 +73,7 @@ console.log(Func.prototype);
 原始数据类型直接存储在栈(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储；  
 引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其
 在栈中的地址，取得地址后从堆中获得实体  
-> ![Stated Clearly Image](http://www.w3school.com.cn/i/ct_js_value.gif)
+> ![Stated Clearly Image](../Resources/ct_js_value.gif)
 
 - **Javascript如何实现继承？**
 
@@ -100,9 +101,27 @@ alert(demo.name);//得到被继承的属性
 
 - **JavaScript继承的几种实现方式？**  
 
-> 参考：[构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)  
-[非构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html)；
->>TODO: 做一下笔记
+> 参考：[阮一峰-构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html)  
+[阮一峰-非构造函数的继承](http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html)；  
+
+>**当希望继承一个构造函数类的时候：**
+```javascript
+var MyClass = function(){
+  this.a = 1;
+}
+MyClass.prototype.b = 2;
+```
+1.绑定构造函数：
+```javascript
+function MySubClass(){
+  MyClass.apply(this); //Here
+  this.c = 3;
+}
+```
+此时虽然继承了this绑定的属性，但是无法继承prototype  
+
+> 2.使用prototype模式
+>> TODO:写完笔记
 
 - **Javascript创建对象的几种方式？**
 
@@ -148,9 +167,9 @@ var person2 = new Person(“Greg”, 27, “Doctor”);
 ```javascript
 function Person(){
 }
-Person.prototype.name = “Nicholas”;
+Person.prototype.name = "Nicholas";
 Person.prototype.age = 29;
-Person.prototype.job = “Software Engineer”;
+Person.prototype.job = "Software Engineer";
 Person.prototype.sayName = function(){
   alert(this.name);
 };
@@ -158,8 +177,31 @@ var person1 = new Person();
 person1.sayName(); //”Nicholas”
 var person2 = new Person();
 alert(person1.sayName == person2.sayName); //true
+//注意
+person1.age === person2.age
+person1.hasOwnProperty(age) // false
+person1.age = 30;
+person1.hasOwnProperty(age) // true
 ```
-可将共享的，引用类型的属性（比如成员方法）用原型模式定义
+可将共享的，引用类型的属性（比如成员方法）用原型模式定义。  
+<w>在新建实例时，prototype的属性不会被复制到实例中（即使是基本类型）（只能通过`__proto__`链式查找获得）。而当手动为实例某属性赋值时，该属性才会存在于示例中</w>
+
+>> Prototype相关API (阮一峰)[http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html]  
+1. *`isPrototypeOf()`*
+```javascript
+Cat.prototype.isPrototypeOf(cat1);
+```
+检测cat1的`__proto__`是否指向Cat.prototype。（手动改变`__proto__`，则改变了对象的原型）
+2. *`hasOwnProperty()`*
+```javascript
+cat1.hasOwnProperty("name")
+```
+判断某一个属性到底是本地属性，还是继承自prototype对象的属性。
+3. *`in`运算符*
+```javascript
+"name" in cat1
+for(let prop in cat1){}
+```
 
 >**对象字面量的方式**   
 ```javascript
@@ -766,8 +808,10 @@ jQuery中没有提供这个功能，所以你需要先编写两个jQuery的扩�
 		所有这些都是 W3C 地理位置 API 定义的对象和函数。因为 polyfill 模拟标准 API，所以能够以一种面向所有浏览器未来的方式针对这些 API 进行开发，
 		一旦对这些 API 的支持变成绝对大多数，则可以方便地去掉 polyfill，无需做任何额外工作。
 
+
 - 做的项目中，有没有用过或自己实现一些 polyfill 方案（兼容性处理方案）？
 
 		比如： html5shiv、Geolocation、Placeholder
+    requestAnimateFrame polyfill / bind polyfill / Object.defineProperties
 
 - 我们给一个dom同时绑定两个点击事件，一个用捕获，一个用冒泡。会执行几次事件，会先执行冒泡还是捕获？
