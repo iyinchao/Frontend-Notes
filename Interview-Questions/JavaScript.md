@@ -2,7 +2,7 @@
 
 -  **介绍js的基本数据类型。**
 
-> 5种，`Undefined、Null、Boolean、Number、String`   
+> 有5种，`Undefined、Null、Boolean、Number、String`   
 
 > ECMAScript6中新增 Symbol  
 > 注意：
