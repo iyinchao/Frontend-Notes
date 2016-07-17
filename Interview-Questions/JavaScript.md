@@ -36,7 +36,7 @@
 -  **JavaScript原型，原型链 ? 有什么特点？**
 
 > 图解：
-![Prototype Diagram](../Resources/prototype-diagram.jpg)  
+![Prototype Diagram](../Resources/prototype-diagram.png)  
 ![Prototype Diagram 2](../Resources/prototype-diagram-2.png)
 >> TODO: 把图画完  
 
